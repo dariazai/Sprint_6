@@ -7,6 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 
 public class ContactInformationPage {
     private WebDriver driver;
+    public ContactInformationPage(WebDriver driver){
+        this.driver = driver;
+    }
     //Поле ввода имени
     private By nameField = By.cssSelector("input[placeholder='* Имя']");
     //Поле ввода фамилии
@@ -17,6 +20,8 @@ public class ContactInformationPage {
     private By metroStationField = By.cssSelector("input[placeholder='* Станция метро']");
     //Поле для ввода телефона
     private By phoneField = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
+    //Кнопка "Далее"
+    private By next = By.xpath("//button[contains(text(), 'Далее')]");
 
     //Метод заполняет поле Имя
     public void setNameField(String name){
@@ -32,13 +37,18 @@ driver.findElement(nameField).sendKeys(name);
     }
     //Метод заполняет поле Станция метро
     public void setMetroStationField(String metro){
-        WebElement stationMetro=driver.findElement(metroStationField);
-        Select dropdown = new Select(stationMetro);
-        dropdown.selectByVisibleText(metro);
+       driver.findElement(metroStationField).click();
+        WebElement nameMetroStation = driver.findElement(By.xpath
+                ("//li[@role='menuitem']//div[text()='" + metro + "']"));
+        nameMetroStation.click();
     }
     //Метод заполняет поле Телефон
     public void setPhoneField(String phone){
         driver.findElement(phoneField).sendKeys(phone);
+    }
+    // Кликнуть на кнопку Далее
+    public void clickContinue(){
+        driver.findElement(next).click();
     }
 // Метод заполняет все поля с контактной информацией пользователя
     public void fillingContactInformation (String name, String lastName,String address,String metro,String phone){
@@ -48,4 +58,6 @@ driver.findElement(nameField).sendKeys(name);
         setMetroStationField(metro);
         setPhoneField(phone);
     }
+
+
 }
