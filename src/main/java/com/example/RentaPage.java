@@ -1,21 +1,27 @@
 package com.example;
 
-import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class RentaPage {
     private WebDriver driver;
-
+    WaitAndClickHelpers click=new WaitAndClickHelpers();
     public RentaPage(WebDriver driver) {
         this.driver = driver;
     }
 
+
     //Поле для ввода даты аренды
     private By date = By.cssSelector("input[placeholder='* Когда привезти самокат']");
     //Поле для выбора срока аренды
-    private By rentalPeriod = By.className("Dropdown-control");
+    private By rentalPeriod = By.xpath("//*[@class='Dropdown-placeholder' and text()='* Срок аренды']");
     //Поле для выбора цвета самоката
     private By colorField = By.className("Order_Checkboxes__3lWSI");
     //Поле для ввода комментария
@@ -29,50 +35,54 @@ public class RentaPage {
     // Чек-бокс для выбора серого цвета самоката
     private By greyColor = By.id("grey");
 
-
     //Кликнуть по кнопке "Заказать"
     public void clickOrderButton() {
+        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
         driver.findElements(orderButton).get(1).click();
+
     }
 
     //Заполнение даты
     public void chooseDate(String chooseDate) {
-        driver.findElement(date).sendKeys(chooseDate + "\n");
+        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+        driver.findElement(date).sendKeys(chooseDate+Keys.ENTER);
 
     }
 
     // Заполнение поля срока аренды
     public void setRentalPeriod(String term) {
-        driver.findElement(rentalPeriod).click();
-        driver.findElement(By.xpath(
-                "//div[@class='Dropdown-option' and text()='" + term + "']")).click();
-        ;
+
+        click.waitClick(driver.findElement(rentalPeriod));
+        click.waitClick(driver.findElement(By.xpath(
+                "//div[@class='Dropdown-option' and text()='" + term + "']")));
+
     }
 
     // Выбор цвета самоката
     public void chooseBlack(String color) {
         if (color.equals("чёрный жемчуг")) {
-            driver.findElement(blackColor).click();
+
+            click.waitClick(driver.findElement(blackColor));
         } else {
-            driver.findElement(greyColor).click();
+            click.waitClick(driver.findElement(greyColor));
         }
     }
 
-    //Выбор серого самоката
-    public void chooseGrey() {
-        driver.findElement(greyColor).click();
-    }
 
     //Зполнение поля "Комментарий"
     public void setComment(String comment) {
+
         driver.findElement(commentField).sendKeys(comment);
+
     }
 
     //Заполнение полей с данными о аренде c черным самокатом
-    public void setFullFieldRenta(String chooseDate, String tern, String comment, String color) {
+    public void setFullFieldRenta(String chooseDate, String term, String comment, String color) {
         chooseDate(chooseDate);
-        setRentalPeriod(tern);
+        setRentalPeriod(term);
         setComment(comment);
         chooseBlack(color);
     }
+
+
 }

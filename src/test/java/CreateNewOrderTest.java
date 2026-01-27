@@ -3,38 +3,63 @@ import com.example.MainPage;
 import com.example.PopUpWindowPage;
 import com.example.RentaPage;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 public class CreateNewOrderTest {
+    private WebDriver driver;
 
-    WebDriver driver = new ChromeDriver();
+    @BeforeEach
+    void setUp() {
+        driver = new FirefoxDriver();
 
+    }
 
+    @ParameterizedTest
+    @MethodSource("provider")
 
-    @Test
-    public void checkActivity() {
+    public void createNewOrderUpButtonTest(String metro, String term, String color, String button) {
 
         driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickOkCookies();
-        objMainPage.clickTopOrderButton();
+        if (button.equals("high")) {
+            objMainPage.clickTopOrderButton();
+        } else {
+            objMainPage.clickDownOrderButton();
+        }
         ContactInformationPage objInformationPage = new ContactInformationPage(driver);
-        objInformationPage.fillingContactInformation("Марфа", "Иванова", "Кошкин лес", "Бульвар Рокоссовского", "+79874444444");
+        objInformationPage.fillingContactInformation("Марфа", "Иванова", "Кошкин лес", metro, "+79874444444");
         objInformationPage.clickContinue();
         RentaPage objRentaPage = new RentaPage(driver);
-        objRentaPage. setFullFieldRenta("23.05.2026","трое суток","ничего не надо","чёрный жемчуг");
+        objRentaPage.setFullFieldRenta("23.05.2026", term, "ничего не надо", color);
         objRentaPage.clickOrderButton();
         PopUpWindowPage odjPopUpPage = new PopUpWindowPage(driver);
         odjPopUpPage.clickYesButton();
+        odjPopUpPage.visibleModalWindow();
     }
-        @AfterEach
-        public void teardown () {
-            // Закрой браузер
-            driver.quit();
-        }
 
+    private static Stream<Arguments> provider() {
+        return Stream.of(
+                Arguments.of("Бульвар Рокоссовского", "двое суток", "чёрный жемчуг", "high"),
+                Arguments.of("Красносельская", "семеро суток", "серая безысходность", "high"),
+                Arguments.of("Красные Ворота", "сутки", "чёрный жемчуг", "low"),
+                Arguments.of("Лубянка", "шестеро суток", "серая безысходность", "low")
+        );
+    }
+
+    @AfterEach
+    public void teardown() {
+        // Закрой браузер
+        driver.quit();
+    }
 }

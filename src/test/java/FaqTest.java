@@ -3,19 +3,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FaqTest {
-    WebDriver driver = new ChromeDriver();
-
-
+    WebDriver driver = new FirefoxDriver();
 
     @Test
     public void checkActivity() {
-
         driver.get("https://qa-scooter.praktikum-services.ru/");
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickOkCookies();
@@ -29,10 +27,10 @@ public class FaqTest {
         assertEquals("Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.",textResponse.get(6));
         assertEquals("Да, обязательно. Всем самокатов! И Москве, и Московской области.",textResponse.get(7));
     }
+
     @AfterEach
     public void teardown () {
         // Закрой браузер
         driver.quit();
     }
-
 }
