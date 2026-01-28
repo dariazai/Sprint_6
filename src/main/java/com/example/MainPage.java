@@ -26,8 +26,6 @@ public class MainPage {
     private final By downOrderButton = By.xpath("//button[text()='Заказать']");
     //Поля раздела "Вопросы о важном"
     private final By faq = By.className("accordion__item");
-    // Вопросы раздела "Вопросы о важном"
-    private final By questions = By.className("accordion__heading");
 
     //Метод собирает ответы на вопросы
     public HashMap<String, String> checkFaq() {
