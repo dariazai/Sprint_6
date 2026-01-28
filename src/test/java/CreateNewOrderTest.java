@@ -27,7 +27,6 @@ public class CreateNewOrderTest {
     @MethodSource("provider")
 
     public void createNewOrderUpButtonTest(String metro, String term, String color, String button) {
-
         driver.get("https://qa-scooter.praktikum-services.ru/");
         driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
         MainPage objMainPage = new MainPage(driver);

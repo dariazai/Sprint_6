@@ -3,20 +3,16 @@ package com.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class RentaPage {
     private WebDriver driver;
-    WaitAndClickHelpers click=new WaitAndClickHelpers();
+    WaitAndClickHelpers click = new WaitAndClickHelpers();
+
     public RentaPage(WebDriver driver) {
         this.driver = driver;
     }
-
 
     //Поле для ввода даты аренды
     private By date = By.cssSelector("input[placeholder='* Когда привезти самокат']");
@@ -39,14 +35,12 @@ public class RentaPage {
     public void clickOrderButton() {
         driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
         driver.findElements(orderButton).get(1).click();
-
     }
 
     //Заполнение даты
     public void chooseDate(String chooseDate) {
         driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-        driver.findElement(date).sendKeys(chooseDate+Keys.ENTER);
-
+        driver.findElement(date).sendKeys(chooseDate + Keys.ENTER);
     }
 
     // Заполнение поля срока аренды
@@ -55,25 +49,20 @@ public class RentaPage {
         click.waitClick(driver.findElement(rentalPeriod));
         click.waitClick(driver.findElement(By.xpath(
                 "//div[@class='Dropdown-option' and text()='" + term + "']")));
-
     }
 
     // Выбор цвета самоката
     public void chooseBlack(String color) {
         if (color.equals("чёрный жемчуг")) {
-
             click.waitClick(driver.findElement(blackColor));
         } else {
             click.waitClick(driver.findElement(greyColor));
         }
     }
 
-
-    //Зполнение поля "Комментарий"
+    //Заполнение поля "Комментарий"
     public void setComment(String comment) {
-
         driver.findElement(commentField).sendKeys(comment);
-
     }
 
     //Заполнение полей с данными о аренде c черным самокатом
@@ -83,6 +72,4 @@ public class RentaPage {
         setComment(comment);
         chooseBlack(color);
     }
-
-
 }

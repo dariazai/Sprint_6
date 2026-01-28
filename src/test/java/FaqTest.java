@@ -13,7 +13,7 @@ public class FaqTest {
     WebDriver driver = new FirefoxDriver();
 
     @Test
-    public void checkActivity() {
+    public void comparingResponsesTest() {
         driver.get("https://qa-scooter.praktikum-services.ru/");
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickOkCookies();

@@ -5,7 +5,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 
-
 public class PopUpWindowPage {
     private WebDriver driver;
     WaitAndClickHelpers click=new WaitAndClickHelpers();
@@ -24,7 +23,7 @@ public class PopUpWindowPage {
         try {
             return driver.findElement(orderWindow).isDisplayed();
         } catch (NoSuchElementException e) {
-            return false; // Элемент не найден → не виден
+            return false;
         }
     }
 }
