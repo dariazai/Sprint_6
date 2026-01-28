@@ -1,7 +1,8 @@
 import com.example.ContactInformationPage;
 import com.example.MainPage;
 import com.example.PopUpWindowPage;
-import com.example.RentaPage;
+import com.example.RentPage;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,24 +12,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateNewOrderTest {
     private WebDriver driver;
 
     @BeforeEach
     void setUp() {
-        driver = new FirefoxDriver();
-
+        driver = new ChromeDriver();
     }
 
     @ParameterizedTest
     @MethodSource("provider")
-
+    @Description("Тест заполняет все поля для регистрации заказа, затем проверяет всплывающее окно о успешной регистрации заказа")
     public void createNewOrderUpButtonTest(String metro, String term, String color, String button) {
         driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickOkCookies();
         if (button.equals("high")) {
@@ -39,12 +39,13 @@ public class CreateNewOrderTest {
         ContactInformationPage objInformationPage = new ContactInformationPage(driver);
         objInformationPage.fillingContactInformation("Марфа", "Иванова", "Кошкин лес", metro, "+79874444444");
         objInformationPage.clickContinue();
-        RentaPage objRentaPage = new RentaPage(driver);
-        objRentaPage.setFullFieldRenta("23.05.2026", term, "ничего не надо", color);
-        objRentaPage.clickOrderButton();
+        RentPage objRentPage = new RentPage(driver);
+        objRentPage.setFullFieldRenta("23.05.2026", term, "ничего не надо", color);
+        objRentPage.clickOrderButton();
         PopUpWindowPage odjPopUpPage = new PopUpWindowPage(driver);
         odjPopUpPage.clickYesButton();
         odjPopUpPage.visibleModalWindow();
+        assertTrue(odjPopUpPage.visibleModalWindow());
     }
 
     private static Stream<Arguments> provider() {

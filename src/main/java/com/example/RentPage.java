@@ -6,30 +6,30 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class RentaPage {
-    private WebDriver driver;
+public class RentPage {
+    private final WebDriver driver;
     WaitAndClickHelpers click = new WaitAndClickHelpers();
 
-    public RentaPage(WebDriver driver) {
+    public RentPage(WebDriver driver) {
         this.driver = driver;
     }
 
     //Поле для ввода даты аренды
-    private By date = By.cssSelector("input[placeholder='* Когда привезти самокат']");
+    private final By date = By.cssSelector("input[placeholder='* Когда привезти самокат']");
     //Поле для выбора срока аренды
-    private By rentalPeriod = By.xpath("//*[@class='Dropdown-placeholder' and text()='* Срок аренды']");
+    private final By rentalPeriod = By.xpath("//*[@class='Dropdown-placeholder' and text()='* Срок аренды']");
     //Поле для выбора цвета самоката
-    private By colorField = By.className("Order_Checkboxes__3lWSI");
+    private final By colorField = By.className("Order_Checkboxes__3lWSI");
     //Поле для ввода комментария
-    private By commentField = By.cssSelector("input[placeholder='Комментарий для курьера']");
+    private final By commentField = By.cssSelector("input[placeholder='Комментарий для курьера']");
     //Кнопка заказать
-    private By orderButton = By.xpath("//button[text()='Заказать']");
+    private final By orderButton = By.xpath("//button[text()='Заказать']");
     //Поле календаря
-    private By calendar = By.className("react-datepicker__month-container");
+    private final By calendar = By.className("react-datepicker__month-container");
     // Чек-бокс для выбора черного цвета самоката
-    private By blackColor = By.id("black");
+    private final By blackColor = By.id("black");
     // Чек-бокс для выбора серого цвета самоката
-    private By greyColor = By.id("grey");
+    private final By greyColor = By.id("grey");
 
     //Кликнуть по кнопке "Заказать"
     public void clickOrderButton() {

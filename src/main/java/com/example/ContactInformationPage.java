@@ -5,24 +5,24 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ContactInformationPage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public ContactInformationPage(WebDriver driver) {
         this.driver = driver;
     }
 
     //Поле ввода имени
-    private By nameField = By.cssSelector("input[placeholder='* Имя']");
+    private final By nameField = By.cssSelector("input[placeholder='* Имя']");
     //Поле ввода фамилии
-    private By lastNameField = By.cssSelector("input[placeholder='* Фамилия']");
+    private final By lastNameField = By.cssSelector("input[placeholder='* Фамилия']");
     //Поле ввода адреса
-    private By addressField = By.cssSelector("input[placeholder='* Адрес: куда привезти заказ']");
+    private final By addressField = By.cssSelector("input[placeholder='* Адрес: куда привезти заказ']");
     // Поле для ввода станции метро
-    private By metroStationField = By.cssSelector("input[placeholder='* Станция метро']");
+    private final By metroStationField = By.cssSelector("input[placeholder='* Станция метро']");
     //Поле для ввода телефона
-    private By phoneField = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
+    private final By phoneField = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
     //Кнопка "Далее"
-    private By next = By.xpath("//button[contains(text(), 'Далее')]");
+    private final By next = By.xpath("//button[contains(text(), 'Далее')]");
 
     //Метод заполняет поле Имя
     public void setNameField(String name) {
