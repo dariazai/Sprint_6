@@ -33,10 +33,12 @@ public class MainPage {
         HashMap<String, String> responses = new HashMap<>();
 
         for (int i = 0; i < elements.size(); i++) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", elements.get(i));
             String key = elements.get(i).getText();
             elements.get(i).click();
+
             WebElement element = elements.get(i).findElement(By.className("accordion__panel"));
-            new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver -> (!element.getText().isEmpty()
+            new WebDriverWait(driver, Duration.ofSeconds(15)).until(driver -> (!element.getText().isEmpty()
             ));
             String text = elements.get(i)
                     .findElement(By.className("accordion__panel"))
