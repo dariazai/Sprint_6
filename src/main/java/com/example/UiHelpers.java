@@ -8,7 +8,7 @@ public class UiHelpers {
     protected static WebDriver driver;
 
     public static void setUpDriverAndData() {
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.get(UrlData.URLMAINPAGE);
     }
 
