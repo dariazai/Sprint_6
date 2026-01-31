@@ -18,7 +18,7 @@ public class FaqTest extends UiHelpers {
 
     @BeforeAll
     static void dataCollection() {
-        UiHelpers.setUpDriverAndData();
+        setUpDriverAndData();
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickOkCookies();
 
